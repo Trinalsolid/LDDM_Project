@@ -1,10 +1,13 @@
 import sqlite3
 from flask import Flask, jsonify, request, g
+from flask_cors import CORS
 
 app = Flask(__name__)
 
 # Configuração do nome do banco de dados
 DATABASE = 'itens.db'
+
+CORS(app)
 
 # Função para conectar ao banco de dados
 def get_db():
@@ -38,6 +41,34 @@ def close_connection(exception):
     if db is not None:
         db.close()
 
+@app.route('/login', methods=['POST'])
+def login():
+    data = request.get_json()  # Recebe os dados JSON da requisição
+
+    email = data.get('email')
+    senha = data.get('senha')
+
+    if not email or not senha:
+        return jsonify({'error': 'Email e senha são obrigatórios'}), 400
+
+    # Consulta o banco de dados para encontrar o usuário pelo email
+    cursor = get_db().cursor()
+    cursor.execute("SELECT * FROM user WHERE email = ?", (email,))
+    user = cursor.fetchone()
+
+    if user:
+        # Remover espaços em branco extras na senha armazenada e na senha fornecida
+        stored_password = user[3].strip()  # Senha armazenada no banco (Índice 3)
+        input_password = senha.strip()  # Senha fornecida pelo usuário
+
+        # Verifica se a senha fornecida corresponde à armazenada no banco
+        if stored_password == input_password:
+            return jsonify({'message': 'Login bem-sucedido', 'user_id': user[0]}), 200
+        else:
+            return jsonify({'error': 'Senha incorreta'}), 401
+    else:
+        return jsonify({'error': 'Email não encontrado'}), 404
+
 # Endpoint para obter todos os usuários
 @app.route('/itens', methods=['GET'])
 def get_itens():
@@ -47,15 +78,7 @@ def get_itens():
     itens_list = [{'id': row[0], 'nome': row[1], 'email': row[2], 'senha': row[3], 'data_nasc': row[4]} for row in itens]
     return jsonify(itens_list), 200
 
-# Endpoint para obter um item específico pelo email
-@app.route('/itens/<string:item_email>', methods=['GET'])
-def get_item(item_email):
-    cursor = get_db().cursor()
-    cursor.execute("SELECT * FROM user WHERE email = ?", (item_email,))
-    item = cursor.fetchone()
-    if item:
-        return jsonify({'id': item[0], 'nome': item[1], 'email': item[2], 'senha': item[3], 'data_nasc': item[4]}), 200
-    return jsonify({'error': 'Item não encontrado'}), 404
+
 
 # Endpoint para criar um novo usuário
 @app.route('/itens', methods=['POST'])

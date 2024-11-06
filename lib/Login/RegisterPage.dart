@@ -1,5 +1,6 @@
-// RegisterPage.dart
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class RegisterPage extends StatefulWidget {
   @override
@@ -28,10 +29,67 @@ class _RegisterPageState extends State<RegisterPage> {
     });
   }
 
+  // Função para registrar o usuário
+  Future<void> _registerUser() async {
+    // Verificar se as senhas coincidem
+    if (_passwordError != null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Corrija os erros antes de continuar.")),
+      );
+      return;
+    }
+
+    // Preparar os dados do usuário para envio
+    final String nome = _nameController.text;
+    final String email = _emailController.text;
+    final String senha = _passwordController.text;
+    final String dataNasc = '1990-01-01';  // Ajuste conforme necessário
+
+    final Map<String, String> userData = {
+      'nome': nome,
+      'email': email,
+      'senha': senha,
+      'data_nasc': dataNasc,
+    };
+
+    // Definir a URL do backend Flask
+    final url = 'http://127.0.0.1:5000/itens';  // Verifique o endereço do seu backend
+
+    try {
+      // Enviar os dados para o backend
+      final response = await http.post(
+        Uri.parse(url),
+        headers: {'Content-Type': 'application/json'},
+        body: json.encode(userData),
+      );
+
+      final responseData = json.decode(response.body);
+
+      if (response.statusCode == 201) {
+        // Se a resposta for bem-sucedida, mostrar mensagem de sucesso
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text("Cadastro realizado com sucesso!")),
+        );
+        // Voltar para a tela de login
+        Navigator.pop(context);
+      } else {
+        // Se houver algum erro, mostrar mensagem de erro
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(responseData['error'] ?? 'Erro ao cadastrar usuário')),
+        );
+      }
+    } catch (error) {
+      // Em caso de erro na requisição HTTP
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Erro ao tentar registrar: $error')),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[100], // Mantendo a mesma cor de fundo da LoginPage
+      backgroundColor: Colors.grey[100],
       appBar: AppBar(
         title: const Text("Cadastro"),
         backgroundColor: Colors.grey[100],
@@ -160,18 +218,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 25.0),
                   child: GestureDetector(
-                    onTap: () {
-                      // Validação simples: verificar se as senhas coincidem
-                      if (_passwordError == null) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text("Cadastro realizado com sucesso!")),
-                        );
-                      } else {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text("Corrija os erros antes de continuar.")),
-                        );
-                      }
-                    },
+                    onTap: _registerUser, // Chama a função para registrar
                     child: Container(
                       padding: EdgeInsets.all(20),
                       decoration: BoxDecoration(
@@ -202,8 +249,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     ),
                     GestureDetector(
                       onTap: () {
-                        // Voltar para a página de login
-                        Navigator.pop(context); // Volta para a tela anterior
+                        Navigator.pop(context); // Voltar para a tela de login
                       },
                       child: const Text(
                         'Login agora',
