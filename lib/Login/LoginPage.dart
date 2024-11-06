@@ -1,6 +1,5 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
-
 import 'package:flutter/material.dart';
+import 'RegisterPage.dart'; // Importe a página RegisterPage
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -26,25 +25,24 @@ class _LoginPageState extends State<LoginPage> {
             ),
             SizedBox(height: 70),
             const Text(
-              'Seja bem vindo',
+              'Seja bem-vindo',
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 36),
             ),
             SizedBox(height: 10),
             const Text(
-              'Bem vindo de volta',
+              'Bem-vindo de volta',
               style: TextStyle(fontSize: 20),
             ),
-            SizedBox(height: 50),
+            SizedBox(height: 25),
 
             // Campo de Email
-
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 25.0),
               child: Container(
                 decoration: BoxDecoration(
                   color: Colors.grey[300],
                   border: Border.all(color: Colors.white),
-                  borderRadius: BorderRadius.circular(12),
+                  borderRadius: BorderRadius.circular(6),
                 ),
                 child: Padding(
                   padding: const EdgeInsets.only(left: 20.0),
@@ -57,18 +55,16 @@ class _LoginPageState extends State<LoginPage> {
                 ),
               ),
             ),
-
             SizedBox(height: 10),
 
             // Campo de Senha
-
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 25.0),
               child: Container(
                 decoration: BoxDecoration(
-                  color: Colors.grey[200],
+                  color: Colors.grey[300],
                   border: Border.all(color: Colors.white),
-                  borderRadius: BorderRadius.circular(9),
+                  borderRadius: BorderRadius.circular(6),
                 ),
                 child: Padding(
                   padding: const EdgeInsets.only(left: 20.0),
@@ -84,11 +80,13 @@ class _LoginPageState extends State<LoginPage> {
             ),
             SizedBox(height: 10),
 
-            // Botao de login
+            // Botão de login
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 25.0),
               child: GestureDetector(
-                  onTap: () {},
+                  onTap: () {
+                    // Lógica de login vai aqui
+                  },
                   child: Container(
                     padding: EdgeInsets.all(20),
                     decoration: BoxDecoration(
@@ -108,18 +106,27 @@ class _LoginPageState extends State<LoginPage> {
             ),
             SizedBox(height: 20),
 
-            //Nao tem conta? registre-se
+            // Não tem conta? Registre-se
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(
-                  'Não possue uma conta?',
+                const Text(
+                  'Não possui uma conta? ',
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
-                Text(
-                  ' Cadastrar agora',
-                  style: TextStyle(
-                      color: Colors.blue, fontWeight: FontWeight.bold),
+                GestureDetector(
+                  onTap: () {
+                    // Navegar para a página de registro (RegisterPage)
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => RegisterPage()),
+                    );
+                  },
+                  child: const Text(
+                    'Cadastrar agora',
+                    style: TextStyle(
+                        color: Colors.blue, fontWeight: FontWeight.bold),
+                  ),
                 ),
               ],
             )

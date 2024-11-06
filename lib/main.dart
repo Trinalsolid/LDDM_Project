@@ -1,9 +1,9 @@
 import "package:flutter/material.dart";
 
-import 'Mapa.dart';
-import 'LoginPage.dart';
-import 'noticias.dart';
-import 'HomePage.dart';
+import 'Map/Mapa.dart';
+import 'Login/LoginPage.dart';
+import 'News/noticias.dart';
+import 'Home/HomePage.dart';
 
 void main() {
   runApp(MaterialApp(
@@ -37,8 +37,7 @@ class _InicioState extends State<Inicio> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("EndeMap"),
-        backgroundColor: Colors.lightBlue[100],
+        backgroundColor: Colors.grey[100],
       ),
       body: _telas[_indiceAtual],
       bottomNavigationBar: BottomNavigationBar(
@@ -53,7 +52,7 @@ class _InicioState extends State<Inicio> {
               backgroundColor: Colors.lightBlue),
           BottomNavigationBarItem(
               icon: Icon(Icons.newspaper),
-              label: "Saldo",
+              label: "Notícias",
               backgroundColor: Colors.lightBlue),
           BottomNavigationBarItem(
               icon: Icon(Icons.map),

@@ -6,6 +6,7 @@ class Noticias extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.grey[100],  // Altere a cor de fundo para gray[100]
       body: Center(
         child: Container(
           constraints: const BoxConstraints(maxWidth: 400),
@@ -15,8 +16,7 @@ class Noticias extends StatelessWidget {
               final item = _articles[index];
               return Container(
                 height: 136,
-                margin:
-                    const EdgeInsets.symmetric(horizontal: 16, vertical: 8.0),
+                margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8.0),
                 decoration: BoxDecoration(
                     border: Border.all(color: const Color(0xFFE0E0E0)),
                     borderRadius: BorderRadius.circular(8.0)),
@@ -41,15 +41,17 @@ class Noticias extends StatelessWidget {
                         Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            Icons.bookmark_border_rounded,
-                            Icons.share,
-                            Icons.more_vert
+                            const Icon(Icons.bookmark_border_rounded, size: 16),
+                            const SizedBox(width: 8),
+                            const Icon(Icons.share, size: 16),
+                            const SizedBox(width: 8),
+                            const Icon(Icons.more_vert, size: 16)
                           ].map((e) {
                             return InkWell(
                               onTap: () {},
                               child: Padding(
                                 padding: const EdgeInsets.only(right: 8.0),
-                                child: Icon(e, size: 16),
+                                child: e,
                               ),
                             );
                           }).toList(),

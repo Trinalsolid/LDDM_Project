@@ -21,15 +21,20 @@ class _MapaState extends State<Mapa> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.grey[100], // Altere o fundo do Scaffold para cinza claro
       appBar: AppBar(
-        title: Text("Mapa"),
+        backgroundColor: Colors.grey[100], // Cor de fundo do AppBar
+        title: Text("Mapa", style: TextStyle(color: Colors.black)), // Cor do título para visibilidade
       ),
-      body: SfMaps(
-        layers: [
-          MapShapeLayer(
-            source: _mapSource,
-          ),
-        ],
+      body: Container(
+        color: Colors.grey[100], // Garante que o fundo do corpo também seja cinza claro
+        child: SfMaps(
+          layers: [
+            MapShapeLayer(
+              source: _mapSource,
+            ),
+          ],
+        ),
       ),
     );
   }
