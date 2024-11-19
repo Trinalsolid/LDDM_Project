@@ -6,7 +6,8 @@ import 'Login/LoginPage.dart';
 import 'News/noticias.dart';
 import 'Home/HomePage.dart';
 
-void main() {
+void main() async {
+  await dotenv.load(fileName: 'assets/.env');
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false,
     home: Inicio(),

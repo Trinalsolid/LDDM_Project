@@ -51,6 +51,7 @@ flutter:
   assets:
     - assets/australia.json
     - assets/brazil-states.geojson
+    - assets/.env
 
   # To add assets to your application, add an assets section, like this:
   # assets:

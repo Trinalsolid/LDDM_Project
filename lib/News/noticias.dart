@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'dart:convert';
 
 // Fetch news data
 Future<List<News>> fetchNews() async {
   final response = await http.get(Uri.parse(
-      'https://newsapi.org/v2/everything?q=medicina&language=pt&sortBy=popularity&apiKey=bd51aa4fb45542de836cc0a02ff661f5'));
+      'https://newsapi.org/v2/everything?q=medicina&language=pt&sortBy=popularity&apiKey=${dotenv.env['NEWS_KEY']}'));
 
   if (response.statusCode == 200) {
     final Map<String, dynamic> jsonResponse = json.decode(response.body);

@@ -1,7 +1,8 @@
 import 'package:google_generative_ai/google_generative_ai.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class GeminiAIService {
-  final apiKey = 'AIzaSyAGV6S-GaYvLLC0kPDwOGWe8llAhpBX4QM';
+  final apiKey = dotenv.env['IA_KEY']??"";
 
   Future<String> sendMessage(String message) async {
     // [START text_gen_text_only_prompt]
