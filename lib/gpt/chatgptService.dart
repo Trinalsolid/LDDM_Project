@@ -1,0 +1,19 @@
+import 'package:google_generative_ai/google_generative_ai.dart';
+
+class GeminiAIService {
+  final apiKey = 'AIzaSyAGV6S-GaYvLLC0kPDwOGWe8llAhpBX4QM';
+
+  Future<String> sendMessage(String message) async {
+    // [START text_gen_text_only_prompt]
+
+    final model = GenerativeModel(
+      model: 'gemini-1.5-pro',
+      apiKey: apiKey,
+    );
+
+    final response = await model.generateContent([Content.text(message)]);
+    return response.text ?? "";
+    print(response.text);
+    // [END text_gen_text_only_prompt]
+  }
+}

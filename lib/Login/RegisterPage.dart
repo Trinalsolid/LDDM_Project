@@ -53,7 +53,7 @@ class _RegisterPageState extends State<RegisterPage> {
     };
 
     // Definir a URL do backend Flask
-    final url = 'http://127.0.0.1:5000/itens';  // Verifique o endereço do seu backend
+    final url = 'http://10.0.2.2:5000/itens';  // Verifique o endereço do seu backend
 
     try {
       // Enviar os dados para o backend

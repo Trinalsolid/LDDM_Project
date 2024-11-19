@@ -92,7 +92,7 @@ class _LoginPageState extends State<LoginPage> {
 
   // Função para enviar as credenciais para o backend
   Future<bool> loginUserBackend(String email, String password) async {
-    final url = Uri.parse('http://127.0.0.1:5000/login');  // Altere para o endpoint correto
+    final url = Uri.parse('http://10.0.2.2:5000/login');  // Altere para o endpoint correto
     try {
       final response = await http.post(
         url,
