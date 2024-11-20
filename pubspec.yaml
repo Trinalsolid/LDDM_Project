@@ -30,6 +30,9 @@ dependencies:
   google_maps_flutter: ^2.0.6
   flutter_svg: ^2.0.10+1
   http: ^1.2.2
+  chat_gpt_flutter: ^1.0.16
+  flutter_dotenv: ^5.2.1
+  google_generative_ai: ^0.4.6
 
 dev_dependencies:
   flutter_test:
@@ -48,6 +51,7 @@ flutter:
   assets:
     - assets/australia.json
     - assets/brazil-states.geojson
+    - assets/.env
 
   # To add assets to your application, add an assets section, like this:
   # assets:
