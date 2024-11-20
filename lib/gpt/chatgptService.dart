@@ -8,7 +8,7 @@ class GeminiAIService {
     // [START text_gen_text_only_prompt]
 
     final model = GenerativeModel(
-      model: 'gemini-1.5-pro',
+      model: 'gemini-1.5-flash',
       apiKey: apiKey,
     );
 
