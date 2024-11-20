@@ -79,7 +79,7 @@ class _ChatScreenState extends State<ChatScreen> {
                 child: TextField(
                   controller: _controller,
                   decoration: const InputDecoration(
-                    hintText: "Type your message...",
+                    hintText: "Digite sua pergunta...",
                     border: OutlineInputBorder(),
                   ),
                 ),
@@ -92,7 +92,7 @@ class _ChatScreenState extends State<ChatScreen> {
                     _controller.clear();
                   }
                 },
-                child: const Text("Send"),
+                child: const Text("Enviar"),
               ),
             ],
           ),

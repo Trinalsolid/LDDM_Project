@@ -13,7 +13,7 @@ Future<List<News>> fetchNews() async {
     final List<dynamic> articles = jsonResponse['articles'];
     return articles.map((article) => News.fromJson(article)).toList();
   } else {
-    throw Exception('Failed to load news');
+    throw Exception('Erro ao carregar notícias');
   }
 }
 
@@ -83,7 +83,7 @@ class Noticias extends StatelessWidget {
     final Size size = MediaQuery.of(context).size;
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Health News')),
+      appBar: AppBar(title: const Text('Notícias')),
       body: FutureBuilder<List<News>>(
         future: fetchNews(),
         builder: (context, snapshot) {
@@ -92,7 +92,7 @@ class Noticias extends StatelessWidget {
           } else if (snapshot.hasError) {
             return Center(child: Text('Error: ${snapshot.error}'));
           } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-            return const Center(child: Text('No news available.'));
+            return const Center(child: Text('Sem notícias.'));
           }
 
           final List<News> newsList = snapshot.data!;

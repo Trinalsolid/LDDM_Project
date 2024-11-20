@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import '../gpt/chatScreen.dart'; // Assuming you have the ChatScreen in its own file.
+import '../news/noticias.dart';
 
 class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
       backgroundColor: Colors.grey[100],
       body: Padding(
@@ -33,6 +35,7 @@ class HomePage extends StatelessWidget {
             SizedBox(height: 20),
             // Here we add ChatScreen inside a Card
             Card(
+
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(15),
               ),
@@ -40,8 +43,9 @@ class HomePage extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: SizedBox(
-                  height: 350, // You can adjust the height as necessary
-                  child: ChatScreen(),
+
+                  height: screenHeight * 0.55, // You can adjust the height as necessary
+                  child: Noticias(),
                 ),
               ),
             ),

@@ -5,6 +5,7 @@ import 'Map/Mapa.dart';
 import 'Login/LoginPage.dart';
 import 'News/noticias.dart';
 import 'Home/HomePage.dart';
+import '../gpt/chatScreen.dart';
 
 void main() async {
   await dotenv.load(fileName: 'assets/.env');
@@ -23,7 +24,7 @@ class _InicioState extends State<Inicio> {
   int _indiceAtual = 0;
   final List<Widget> _telas = [
     HomePage(),
-    Noticias(),
+    ChatScreen(),
     Mapa(),
     LoginPage(),
   ];
@@ -53,8 +54,8 @@ class _InicioState extends State<Inicio> {
               label: "Início",
               backgroundColor: Colors.lightBlue),
           BottomNavigationBarItem(
-              icon: Icon(Icons.newspaper),
-              label: "Notícias",
+              icon: Icon(Icons.assistant_rounded ),
+              label: "IA",
               backgroundColor: Colors.lightBlue),
           BottomNavigationBarItem(
               icon: Icon(Icons.map),
