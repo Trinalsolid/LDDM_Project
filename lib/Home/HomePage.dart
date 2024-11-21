@@ -68,7 +68,7 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  // Function to open Google Maps with a search query
+  // Function to open Google Maps app with a search query
   Future<void> _launchMaps(String type) async {
     String query = '';
     if (type == "hospitals") {
@@ -79,7 +79,15 @@ class HomePage extends StatelessWidget {
       query = 'vaccines near me';
     }
 
-    final String googleMapsUrl = 'https://www.google.com/maps/search/?q=$query';
+    final Uri googleMapsUri = Uri(
+      scheme: 'geo',
+      path: '0,0',
+      queryParameters: {
+        'q': query,
+      },
+    );
+
+    final String googleMapsUrl = googleMapsUri.toString();
 
     if (await canLaunch(googleMapsUrl)) {
       await launch(googleMapsUrl);
