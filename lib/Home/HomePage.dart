@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart'; // Import the url_launcher package
+import '../news/noticias.dart';
 
 class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
-      backgroundColor: Colors.grey[100],  // Altere a cor de fundo para grey[100]
+      backgroundColor: Colors.grey[100],
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -22,59 +25,32 @@ class HomePage extends StatelessWidget {
             ),
             SizedBox(height: 20),
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                _buildIconButton('Hospitals', Icons.local_hospital, Colors.red),
-                _buildIconButton('Mapa', Icons.map, Colors.green),
-                _buildIconButton('Vacina', Icons.vaccines, Colors.orange),
+                Expanded(
+                  child: _buildRectangularButton('Hospitals', Icons.local_hospital, Colors.red, context, "hospitals"),
+                ),
+                SizedBox(width: 10), // Space between buttons
+                Expanded(
+                  child: _buildRectangularButton('Postos de saúde', Icons.add_location_outlined, Colors.green, context, "health_centers"),
+                ),
+                SizedBox(width: 10), // Space between buttons
+                Expanded(
+                  child: _buildRectangularButton('Vacina', Icons.vaccines, Colors.orange, context, "vacinas"),
+                ),
               ],
             ),
             SizedBox(height: 20),
-            Text(
-              'Notícias',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-            ),
-            SizedBox(height: 10),
-            Expanded(
-              child: SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    _buildNewsCard(
-                      title:
-                          'Fortalecimento da saúde indígena é tema em comissão na Câmara',
-                      content:
-                          'Durante audiência, secretário da Sesai destacou avanços e desafios em um ano e meio de trabalho.',
-                      tags: 'saúde indígena, missão yanomami, povos originários',
-                      date: '28/08/2024 17h00',
-                    ),
-                    SizedBox(height: 20),
-                    _buildNewsCard(
-                      title:
-                          'Tecnologia de ponta é apresentada em feira de inovações',
-                      content:
-                          'Especialistas discutem o futuro da inteligência artificial e suas aplicações no mercado brasileiro.',
-                      tags: 'IA, inovações tecnológicas, futuro digital',
-                      date: '15/08/2024 11h30',
-                    ),
-                    SizedBox(height: 20),
-                    _buildNewsCard(
-                      title:
-                          'Plano de infraestrutura é aprovado em comissão do Senado',
-                      content:
-                          'O projeto visa melhorar a logística de transporte e comunicação em áreas remotas do país.',
-                      tags: 'infraestrutura, logística, desenvolvimento regional',
-                      date: '10/08/2024 09h45',
-                    ),
-                    SizedBox(height: 20),
-                    _buildNewsCard(
-                      title: 'Educação ambiental ganha força em escolas públicas',
-                      content:
-                          'Programa visa conscientizar jovens sobre a importância da preservação ambiental.',
-                      tags: 'educação, preservação ambiental, sustentabilidade',
-                      date: '05/08/2024 14h20',
-                    ),
-                  ],
+            // Here we add ChatScreen inside a Card
+            Card(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(15),
+              ),
+              elevation: 5,
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: SizedBox(
+                  height: screenHeight * 0.55, // You can adjust the height as necessary
+                  child: Noticias(),
                 ),
               ),
             ),
@@ -84,51 +60,45 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  Widget _buildIconButton(String label, IconData icon, Color color) {
-    return Column(
-      children: [
-        CircleAvatar(
-          radius: 30,
-          backgroundColor: Colors.grey[100],
-          child: Icon(icon, color: color, size: 30),
-        ),
-        SizedBox(height: 5),
-        Text(label),
-      ],
-    );
+  // Function to open Google Maps with a search query
+  Future<void> _launchMaps(String type) async {
+    String query = '';
+    if (type == "hospitals") {
+      query = 'hospitals near me';
+    } else if (type == "health_centers") {
+      query = 'health centers near me';
+    } else if (type == "vacinas") {
+      query = 'vaccines near me';
+    }
+
+    final String googleMapsUrl = 'https://www.google.com/maps/search/?q=$query';
+    
+    if (await canLaunch(googleMapsUrl)) {
+      await launch(googleMapsUrl);
+    } else {
+      throw 'Could not launch $googleMapsUrl';
+    }
   }
 
-  Widget _buildNewsCard({
-    required String title,
-    required String content,
-    required String tags,
-    required String date,
-  }) {
-    return Card(
-      color: Colors.white,  // Cor de fundo dos cards
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              title,
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
-            SizedBox(height: 10),
-            Text(content),
-            SizedBox(height: 10),
-            Text(
-              'tags: $tags',
-              style: TextStyle(color: Colors.blue),
-            ),
-            SizedBox(height: 10),
-            Text('Publicado: $date Notícia'),
-          ],
+  Widget _buildRectangularButton(String label, IconData icon, Color color, BuildContext context, String type) {
+    return ElevatedButton(
+      onPressed: () {
+        _launchMaps(type); // Pass the type to the function to open the corresponding map search
+      },
+      style: ElevatedButton.styleFrom(
+        backgroundColor: color,
+        padding: EdgeInsets.symmetric(vertical: 12, horizontal: 20),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12), // Slightly rounded corners
         ),
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(icon, color: Colors.white, size: 36), // Increased icon size
+          SizedBox(height: 8), // Adds spacing between the icon and text
+          Text(label, style: TextStyle(color: Colors.white)),
+        ],
       ),
     );
   }
