@@ -6,7 +6,7 @@ import 'dart:convert';
 // Fetch news data
 Future<List<News>> fetchNews() async {
   final response = await http.get(Uri.parse(
-      'https://newsapi.org/v2/everything?q=medicina&language=pt&sortBy=popularity&apiKey=${dotenv.env['NEWS_KEY']}'));
+      'https://newsapi.org/v2/everything?q=medicina&sortBy=popularity&language=pt&apiKey=${dotenv.env['NEWS_KEY']}'));
 
   if (response.statusCode == 200) {
     final Map<String, dynamic> jsonResponse = json.decode(response.body);

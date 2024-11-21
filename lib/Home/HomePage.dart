@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../gpt/chatScreen.dart'; // Assuming you have the ChatScreen in its own file.
+import 'package:url_launcher/url_launcher.dart';
 import '../news/noticias.dart';
 
 class HomePage extends StatelessWidget {
@@ -25,17 +25,31 @@ class HomePage extends StatelessWidget {
             ),
             SizedBox(height: 20),
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                _buildIconButton('Hospitals', Icons.local_hospital, Colors.red),
-                _buildIconButton('Mapa', Icons.map, Colors.green),
-                _buildIconButton('Vacina', Icons.vaccines, Colors.orange),
+                Expanded(
+                  child: _buildRectangularButton('Hospitals',
+                      Icons.local_hospital, Colors.red, context, "hospitals"),
+                ),
+                SizedBox(width: 10), // Space between buttons
+                Expanded(
+                  child: _buildRectangularButton(
+                      'UPA',
+                      Icons.add_location_outlined,
+                      Colors.green,
+                      context,
+                      "health_centers"),
+                ),
+                SizedBox(width: 10), // Space between buttons
+                Expanded(
+                  child: _buildRectangularButton('Vacina', Icons.vaccines,
+                      Colors.orange, context, "vacinas"),
+                ),
+
               ],
             ),
             SizedBox(height: 20),
             // Here we add ChatScreen inside a Card
             Card(
-
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(15),
               ),
@@ -43,8 +57,8 @@ class HomePage extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: SizedBox(
-
-                  height: screenHeight * 0.55, // You can adjust the height as necessary
+                  height: screenHeight *
+                      0.55, // You can adjust the height as necessary
                   child: Noticias(),
                 ),
               ),
@@ -55,17 +69,56 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  Widget _buildIconButton(String label, IconData icon, Color color) {
-    return Column(
-      children: [
-        CircleAvatar(
-          radius: 30,
-          backgroundColor: Colors.grey[100],
-          child: Icon(icon, color: color, size: 30),
+  // Function to open Google Maps app with a search query
+  Future<void> _launchMaps(String type) async {
+    String query = '';
+    if (type == "hospitals") {
+      query = 'hospitals near me';
+    } else if (type == "health_centers") {
+      query = 'health centers near me';
+    } else if (type == "vacinas") {
+      query = 'vaccines near me';
+    }
+
+    final Uri googleMapsUri = Uri(
+      scheme: 'geo',
+      path: '0,0',
+      queryParameters: {
+        'q': query,
+      },
+    );
+
+    final String googleMapsUrl = googleMapsUri.toString();
+
+    if (await canLaunch(googleMapsUrl)) {
+      await launch(googleMapsUrl);
+    } else {
+      throw 'Could not launch $googleMapsUrl';
+    }
+  }
+
+  Widget _buildRectangularButton(String label, IconData icon, Color color,
+      BuildContext context, String type) {
+    return ElevatedButton(
+      onPressed: () {
+        _launchMaps(
+            type); // Pass the type to the function to open the corresponding map search
+      },
+      style: ElevatedButton.styleFrom(
+        backgroundColor: color,
+        padding: EdgeInsets.symmetric(vertical: 12, horizontal: 20),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12), // Slightly rounded corners
         ),
-        SizedBox(height: 5),
-        Text(label),
-      ],
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(icon, color: Colors.white, size: 36), // Increased icon size
+          SizedBox(height: 8), // Adds spacing between the icon and text
+          Text(label, style: TextStyle(color: Colors.white)),
+        ],
+      ),
     );
   }
 }
