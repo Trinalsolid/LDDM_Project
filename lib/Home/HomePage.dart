@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart'; // Import the url_launcher package
+import 'package:url_launcher/url_launcher.dart';
 import '../news/noticias.dart';
 
 class HomePage extends StatelessWidget {
@@ -27,15 +27,22 @@ class HomePage extends StatelessWidget {
             Row(
               children: [
                 Expanded(
-                  child: _buildRectangularButton('Hospitals', Icons.local_hospital, Colors.red, context, "hospitals"),
+                  child: _buildRectangularButton('Hospitals',
+                      Icons.local_hospital, Colors.red, context, "hospitals"),
                 ),
                 SizedBox(width: 10), // Space between buttons
                 Expanded(
-                  child: _buildRectangularButton('Postos de saúde', Icons.add_location_outlined, Colors.green, context, "health_centers"),
+                  child: _buildRectangularButton(
+                      'Postos de saúde',
+                      Icons.add_location_outlined,
+                      Colors.green,
+                      context,
+                      "health_centers"),
                 ),
                 SizedBox(width: 10), // Space between buttons
                 Expanded(
-                  child: _buildRectangularButton('Vacina', Icons.vaccines, Colors.orange, context, "vacinas"),
+                  child: _buildRectangularButton('Vacina', Icons.vaccines,
+                      Colors.orange, context, "vacinas"),
                 ),
               ],
             ),
@@ -49,7 +56,8 @@ class HomePage extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: SizedBox(
-                  height: screenHeight * 0.55, // You can adjust the height as necessary
+                  height: screenHeight *
+                      0.55, // You can adjust the height as necessary
                   child: Noticias(),
                 ),
               ),
@@ -72,7 +80,7 @@ class HomePage extends StatelessWidget {
     }
 
     final String googleMapsUrl = 'https://www.google.com/maps/search/?q=$query';
-    
+
     if (await canLaunch(googleMapsUrl)) {
       await launch(googleMapsUrl);
     } else {
@@ -80,10 +88,12 @@ class HomePage extends StatelessWidget {
     }
   }
 
-  Widget _buildRectangularButton(String label, IconData icon, Color color, BuildContext context, String type) {
+  Widget _buildRectangularButton(String label, IconData icon, Color color,
+      BuildContext context, String type) {
     return ElevatedButton(
       onPressed: () {
-        _launchMaps(type); // Pass the type to the function to open the corresponding map search
+        _launchMaps(
+            type); // Pass the type to the function to open the corresponding map search
       },
       style: ElevatedButton.styleFrom(
         backgroundColor: color,
