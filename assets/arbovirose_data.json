@@ -1,0 +1,137 @@
+{
+  "Acre": {
+    "dengue": 2500,
+    "zika": 800,
+    "chikungunya": 1550
+  },
+  "Alagoas": {
+    "dengue": 1400,
+    "zika": 1120,
+    "chikungunya": 660
+  },
+  "Amapá": {
+    "dengue": 5050,
+    "zika": 70,
+    "chikungunya": 3600
+  },
+  "Amazonas": {
+    "dengue": 4000,
+    "zika": 1200,
+    "chikungunya": 1800
+  },
+  "Bahia": {
+    "dengue": 2000,
+    "zika": 600,
+    "chikungunya": 450
+  },
+  "Ceará": {
+    "dengue": 5000,
+    "zika": 1200,
+    "chikungunya": 800
+  },
+  "Distrito Federal": {
+    "dengue": 1900,
+    "zika": 1100,
+    "chikungunya": 500
+  },
+  "Espírito Santo": {
+    "dengue": 600,
+    "zika": 250,
+    "chikungunya": 150
+  },
+  "Goiás": {
+    "dengue": 700,
+    "zika": 250,
+    "chikungunya": 130
+  },
+  "Maranhão": {
+    "dengue": 300,
+    "zika": 100,
+    "chikungunya": 60
+  },
+  "Minas Gerais": {
+    "dengue": 1200,
+    "zika": 1500,
+    "chikungunya": 1250
+  },
+  "Mato Grosso": {
+    "dengue": 4500,
+    "zika": 1800,
+    "chikungunya": 9000
+  },
+  "Mato Grosso do Sul": {
+    "dengue": 3500,
+    "zika": 1200,
+    "chikungunya": 14000
+  },
+  "Pará": {
+    "dengue": 5050,
+    "zika": 1880,
+    "chikungunya": 1260
+  },
+  "Paraíba": {
+    "dengue": 4000,
+    "zika": 1150,
+    "chikungunya": 1290
+  },
+  "Paraná": {
+    "dengue": 3000,
+    "zika": 1340,
+    "chikungunya": 5000
+  },
+  "Pernambuco": {
+    "dengue": 1000,
+    "zika": 3500,
+    "chikungunya": 1150
+  },
+  "Piauí": {
+    "dengue": 2200,
+    "zika": 1500,
+    "chikungunya": 4100
+  },
+  "Rio de Janeiro": {
+    "dengue": 8000,
+    "zika": 3000,
+    "chikungunya": 1200
+  },
+  "Rio Grande do Norte": {
+    "dengue": 4000,
+    "zika": 1500,
+    "chikungunya": 900
+  },
+  "Rio Grande do Sul": {
+    "dengue": 2200,
+    "zika": 1800,
+    "chikungunya": 4000
+  },
+  "Rondônia": {
+    "dengue": 2000,
+    "zika": 1300,
+    "chikungunya": 700
+  },
+  "Roraima": {
+    "dengue": 100,
+    "zika": 50,
+    "chikungunya": 30
+  },
+  "Santa Catarina": {
+    "dengue": 4000,
+    "zika": 150,
+    "chikungunya": 70
+  },
+  "São Paulo": {
+    "dengue": 11500,
+    "zika": 3000,
+    "chikungunya": 2000
+  },
+  "Sergipe": {
+    "dengue": 400,
+    "zika": 150,
+    "chikungunya": 90
+  },
+  "Tocantins": {
+    "dengue": 2150,
+    "zika": 1400,
+    "chikungunya": 6000
+  }
+}

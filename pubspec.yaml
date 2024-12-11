@@ -34,6 +34,8 @@ dependencies:
   flutter_dotenv: ^5.2.1
   google_generative_ai: ^0.4.6
   url_launcher: ^6.0.20
+  shared_preferences: ^2.3.3
+  geolocator: ^9.0.2
 
 dev_dependencies:
   flutter_test:
@@ -53,6 +55,8 @@ flutter:
     - assets/australia.json
     - assets/brazil-states.geojson
     - assets/.env
+    - assets/arbovirose_data.json
+    - assets/brazil.svg
 
   # To add assets to your application, add an assets section, like this:
   # assets:
