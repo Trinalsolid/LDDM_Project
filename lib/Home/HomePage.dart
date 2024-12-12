@@ -13,7 +13,6 @@ class HomePage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-
             Row(
               children: [
                 Expanded(
@@ -34,7 +33,6 @@ class HomePage extends StatelessWidget {
                   child: _buildRectangularButton('Vacina', Icons.vaccines,
                       Colors.orange, context, "vacinas"),
                 ),
-
               ],
             ),
             SizedBox(height: 20),
@@ -47,7 +45,8 @@ class HomePage extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.all(6.0),
                 child: SizedBox(
-                  height: screenHeight - 300, // You can adjust the height as necessary
+                  height: screenHeight -
+                      305, // You can adjust the height as necessary
                   child: Noticias(),
                 ),
               ),

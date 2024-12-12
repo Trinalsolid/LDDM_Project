@@ -38,6 +38,8 @@ dependencies:
   geolocator: ^9.0.2
   sqflite: ^2.2.8
   path: ^1.8.3
+  firebase_core: ^2.4.1
+  cloud_firestore: ^4.8.3
 
 dev_dependencies:
   flutter_test:

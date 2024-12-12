@@ -35,6 +35,37 @@ class _RegisterPageState extends State<RegisterPage> {
     });
   }
 
+  Future<void> addUser(String nome, String email, String senha) async {
+    final url = Uri.parse(
+        'http://127.0.0.1:5000/add_user'); // Substitua pelo IP do seu servidor
+    final response = await http.post(
+      url,
+      headers: {'Content-Type': 'application/json'},
+      body: json.encode({
+        'nome': nome,
+        'email': email,
+        'senha': senha,
+      }),
+    );
+
+    if (response.statusCode == 200) {
+      final data = json.decode(response.body);
+      if (data['message'] != null) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(data['message'])),
+        );
+      } else if (data['error'] != null) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(data['error'])),
+        );
+      }
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Erro ao adicionar usuário')),
+      );
+    }
+  }
+
   // Função para registrar o usuário
   Future<void> _registerUser() async {
     // Verificar se as senhas coincidem
@@ -58,6 +89,7 @@ class _RegisterPageState extends State<RegisterPage> {
           await DatabaseHelper.instance.registerUser(nome, email, senha);
 
       if (result != -1) {
+        addUser(nome, email, senha);
         // Se a resposta for bem-sucedida, mostrar mensagem de sucesso
         final prefs = await SharedPreferences.getInstance();
         await prefs.setBool('isLoggedIn', true);
