@@ -36,6 +36,8 @@ dependencies:
   url_launcher: ^6.0.20
   shared_preferences: ^2.3.3
   geolocator: ^9.0.2
+  sqflite: ^2.2.8
+  path: ^1.8.3
 
 dev_dependencies:
   flutter_test:

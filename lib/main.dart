@@ -1,5 +1,9 @@
 import "package:flutter/material.dart";
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:navegacao/database/DatabaseHelper.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:sqflite/sqflite.dart';
+import 'package:path/path.dart';
 
 import 'Map/Mapa.dart';
 import 'Login/LoginPage.dart';
@@ -8,10 +12,17 @@ import 'Home/HomePage.dart';
 import 'gpt/chatScreen.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized(); // Necessário para async no início
+
   await dotenv.load(fileName: 'assets/.env');
+
+  // Verificar estado de login
+  final prefs = await SharedPreferences.getInstance();
+  final isLoggedIn = prefs.getBool('isLoggedIn') ?? false;
+
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false,
-    home: Inicio(),
+    home: isLoggedIn ? Inicio() : LoginPage(),
   ));
 }
 
@@ -22,12 +33,18 @@ class Inicio extends StatefulWidget {
 
 class _InicioState extends State<Inicio> {
   int _indiceAtual = 0;
-  final List<Widget> _telas = [
-    HomePage(),
-    ChatScreen(),
-    Mapa(),
-    LoginPage(),
-  ];
+  late List<Widget> _telas;
+
+  @override
+  void initState() {
+    super.initState();
+    _telas = [
+      HomePage(),
+      ChatScreen(),
+      Mapa(),
+      LoginPage(), // You'll need to modify LoginPage to work with DatabaseHelper
+    ];
+  }
 
   void onTabTapped(int index) {
     setState(() {
@@ -54,7 +71,7 @@ class _InicioState extends State<Inicio> {
               label: "Início",
               backgroundColor: Colors.lightBlue),
           BottomNavigationBarItem(
-              icon: Icon(Icons.assistant_rounded ),
+              icon: Icon(Icons.assistant_rounded),
               label: "IA",
               backgroundColor: Colors.lightBlue),
           BottomNavigationBarItem(

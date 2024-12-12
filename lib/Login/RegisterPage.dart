@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:navegacao/Home/HomePage.dart';
+import 'package:navegacao/database/DatabaseHelper.dart';
 import 'dart:convert';
+
+import 'package:navegacao/main.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class RegisterPage extends StatefulWidget {
   @override
@@ -12,7 +17,8 @@ class _RegisterPageState extends State<RegisterPage> {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _confirmPasswordController = TextEditingController();
+  final TextEditingController _confirmPasswordController =
+      TextEditingController();
 
   // Variável para controle de erro na confirmação de senha
   String? _passwordError;
@@ -43,30 +49,23 @@ class _RegisterPageState extends State<RegisterPage> {
     final String nome = _nameController.text;
     final String email = _emailController.text;
     final String senha = _passwordController.text;
-    final String dataNasc = '1990-01-01';  // Ajuste conforme necessário
-
-    final Map<String, String> userData = {
-      'nome': nome,
-      'email': email,
-      'senha': senha,
-      'data_nasc': dataNasc,
-    };
+    print('$nome, $email, $senha \n');
 
     // Definir a URL do backend Flask
-    final url = 'http://10.0.2.2:5000/itens';  // Verifique o endereço do seu backend
-
     try {
       // Enviar os dados para o backend
-      final response = await http.post(
-        Uri.parse(url),
-        headers: {'Content-Type': 'application/json'},
-        body: json.encode(userData),
-      );
+      int result =
+          await DatabaseHelper.instance.registerUser(nome, email, senha);
 
-      final responseData = json.decode(response.body);
-
-      if (response.statusCode == 201) {
+      if (result != -1) {
         // Se a resposta for bem-sucedida, mostrar mensagem de sucesso
+        final prefs = await SharedPreferences.getInstance();
+        await prefs.setBool('isLoggedIn', true);
+
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => Inicio()),
+        );
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text("Cadastro realizado com sucesso!")),
         );
@@ -75,7 +74,7 @@ class _RegisterPageState extends State<RegisterPage> {
       } else {
         // Se houver algum erro, mostrar mensagem de erro
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(responseData['error'] ?? 'Erro ao cadastrar usuário')),
+          SnackBar(content: Text('Erro ao cadastrar usuário')),
         );
       }
     } catch (error) {

@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:navegacao/Home/HomePage.dart';
+import 'package:navegacao/database/DatabaseHelper.dart';
+import 'package:navegacao/main.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'RegisterPage.dart'; // Importe a página RegisterPage
 import 'dart:convert';
 import 'package:http/http.dart' as http;
@@ -45,7 +49,15 @@ class _LoginPageState extends State<LoginPage> {
     final loginSuccessful = await loginUserBackend(email, password);
 
     if (loginSuccessful) {
-      // Se o login for bem-sucedido, mostrar mensagem
+      // Salvar estado de login
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setBool('isLoggedIn', true);
+
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => Inicio()),
+      );
+
       showDialog(
         context: context,
         builder: (context) {
@@ -92,25 +104,15 @@ class _LoginPageState extends State<LoginPage> {
 
   // Função para enviar as credenciais para o backend
   Future<bool> loginUserBackend(String email, String password) async {
-    final url = Uri.parse('http://10.0.2.2:5000/login');  // Altere para o endpoint correto
+    bool result = false;
     try {
-      final response = await http.post(
-        url,
-        headers: {'Content-Type': 'application/json'},
-        body: json.encode({'email': email, 'senha': password}),  // Passa direto o JSON
-      );
-
-      if (response.statusCode == 200) {
-        return true; // Login bem-sucedido
-      } else if (response.statusCode == 401) {
-        return false; // Credenciais inválidas
-      } else {
-        return false; // Outros erros
-      }
+      result = await DatabaseHelper.instance.loginUser(email, password);
+      if (result) {}
     } catch (e) {
       print('Erro de requisição: $e');
       return false;
     }
+    return result;
   }
 
   @override
@@ -224,7 +226,8 @@ class _LoginPageState extends State<LoginPage> {
                       onTap: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => RegisterPage()),
+                          MaterialPageRoute(
+                              builder: (context) => RegisterPage()),
                         );
                       },
                       child: const Text(
