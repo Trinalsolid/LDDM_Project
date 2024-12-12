@@ -13,17 +13,7 @@ class HomePage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            TextField(
-              decoration: InputDecoration(
-                hintText: 'Pesquisar',
-                prefixIcon: Icon(Icons.search),
-                suffixIcon: Icon(Icons.close),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-              ),
-            ),
-            SizedBox(height: 20),
+
             Row(
               children: [
                 Expanded(
@@ -55,10 +45,9 @@ class HomePage extends StatelessWidget {
               ),
               elevation: 5,
               child: Padding(
-                padding: const EdgeInsets.all(16.0),
+                padding: const EdgeInsets.all(6.0),
                 child: SizedBox(
-                  height: screenHeight *
-                      0.55, // You can adjust the height as necessary
+                  height: screenHeight - 300, // You can adjust the height as necessary
                   child: Noticias(),
                 ),
               ),
@@ -73,11 +62,11 @@ class HomePage extends StatelessWidget {
   Future<void> _launchMaps(String type) async {
     String query = '';
     if (type == "hospitals") {
-      query = 'hospitals near me';
+      query = 'Hospital';
     } else if (type == "health_centers") {
-      query = 'health centers near me';
+      query = 'UPA';
     } else if (type == "vacinas") {
-      query = 'vaccines near me';
+      query = 'Centro de vacinação';
     }
 
     final Uri googleMapsUri = Uri(
