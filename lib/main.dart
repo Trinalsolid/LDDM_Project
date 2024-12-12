@@ -7,6 +7,7 @@ import 'package:path/path.dart';
 
 import 'Map/Mapa.dart';
 import 'Login/LoginPage.dart';
+import 'Login/UserPage.dart';
 import 'News/noticias.dart';
 import 'Home/HomePage.dart';
 import 'gpt/chatScreen.dart';
@@ -42,7 +43,7 @@ class _InicioState extends State<Inicio> {
       HomePage(),
       ChatScreen(),
       Mapa(),
-      LoginPage(), // You'll need to modify LoginPage to work with DatabaseHelper
+      UserPage(), // You'll need to modify LoginPage to work with DatabaseHelper
     ];
   }
 

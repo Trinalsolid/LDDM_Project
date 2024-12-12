@@ -93,6 +93,7 @@ class _RegisterPageState extends State<RegisterPage> {
         // Se a resposta for bem-sucedida, mostrar mensagem de sucesso
         final prefs = await SharedPreferences.getInstance();
         await prefs.setBool('isLoggedIn', true);
+        await prefs.setString("email", email);
 
         Navigator.pushReplacement(
           context,

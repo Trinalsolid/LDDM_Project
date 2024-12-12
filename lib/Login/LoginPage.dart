@@ -52,6 +52,7 @@ class _LoginPageState extends State<LoginPage> {
       // Salvar estado de login
       final prefs = await SharedPreferences.getInstance();
       await prefs.setBool('isLoggedIn', true);
+      await prefs.setString("email", email);
 
       Navigator.pushReplacement(
         context,
